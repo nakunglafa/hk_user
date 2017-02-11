@@ -1,13 +1,13 @@
 app.factory('token',function($http,$timeout){
 	var token={
 		url:'http://www.hamrokitchen.com/',
-		request:function(username,password,callback){
+		request:function(callback){
 			var data={
 				client_id:2,
 				client_secret:'uWTPV7D27mfE3EculAs1cBpoh30ObJzljiBROPcR',
 				grant_type:'password',
-				username:username,
-				password:password				
+				username:'nakunglafa@gmail.com',
+				password:'hello12345'				
 			}
 			$http({
 				method:'POST',
