@@ -1,0 +1,15 @@
+<md-content ng-cloak>
+<!-- toolbar  started    -->
+	    <md-toolbar>
+	      <md-fab-actions class="md-toolbar-tools">
+	        <md-button aria-label="login" class="md-icon-button" ng-click="index.showConfirm($event)">
+	        	<md-tooltip md-direction="bottom">{{ index.title }}</md-tooltip>
+	          	<md-icon md-svg-src="img/icons/people.svg"></md-icon>
+	        </md-button>
+	         <h2 flex> welcome {{ content.user.name }} to Hamro Kitchen </h2>
+
+
+	      </md-fab-actions>
+	    </md-toolbar>
+</md-content>
+<div ui-view></div>
