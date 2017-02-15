@@ -1,54 +1,31 @@
 app.controller('loginctrl',
 
-	[
-		'$state',
-		'token',
-		'$timeout',
-		'$rootScope',
-		function($state,token,$timeout,$rootScope){
+		function($state,token,$timeout,$rootScope,user){
 		var itself=this;
-		$rootScope.title='login';
-		itself.title=$rootScope.title;
-		itself.username='nakunglafa@gmail.com';
-		itself.password='hello12345';
-		itself.login=function()
-			{
-				$('.loading').css({
-					display:'block'
-				});
-				token.request(itself.username,itself.password,function(response){
-					if(response.data.error)
-					{
-						$state.go('login');
-						$('.loading').css('display','none');
-					}else
-					{
-						var tokenValue=response.data;
-						token.set(tokenValue.access_token,tokenValue.expires_in,tokenValue.refresh_token);	
-										 $timeout(function(){
-				 		$('.loading').css({
-						display:'none'
-						});
-						$state.go('home',{
-							data:{
-									loggedin:true
-								}
-							});
-				 		},3000);				
-					}
+		if(user.isLogin()){
+			$state.go('index');
+		}
+		else{
+			itself.username='nakunglafa@gmail.com';
+			itself.password='hello12345';
+			itself.login=function()
+				{
+					token.request(itself.username,itself.password,function(response){
+						var t=response.data;
+						token.set(t.access_token,t.expires_in,t.refresh_token);
+						$state.go('index');
+						
+					});
+				}
 
-				});
-				
-
-			//$timeout(location.reload(),1000)
-			}
+		}
 
 // template jquery------------------------------------------------------------------
 			$('.message a').click(function(){
 			$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 			});		
 		}
-	]);
+	);
 
 
 

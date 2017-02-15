@@ -1,32 +1,35 @@
 
-app.controller('indexctrl',[
-	'token',
-	'$state',
-	'$mdDialog',
-	'$timeout',
-	'$stateParams',
-	'$rootScope',
-	function(token,$state,$mdDialog,$timeout,$stateParams,$rootScope)
+app.controller('indexctrl',function($state,user,$mdDialog){
+	var itself=this;
+	if(user.isLogin())
 	{
-			var itself=this;	
-			$rootScope.title='logout';
-			itself.title=$rootScope.title;
-		    itself.showConfirm = function(ev){
-			// Appending dialog to document.body to cover sidenav in docs app
-		    var confirm = $mdDialog.confirm()
-		          .title('Logout')
-		          .textContent('Are you sure to logout')
-		          .ariaLabel('Logout')
-		          .targetEvent(ev)
-		          .ok('logout')
-		          .cancel('Cancel');
-		    $mdDialog.show(confirm).then(function() {
-		      token.destroy();
-		      $rootScope.title='login';
-		      $timeout(location.reload(),1000)
-		    }, function() {
-		    });
-		  };
-		}
-	]);
+		user.get(function(response){
+			console.log(response);
+			itself.user=response.data;
+		});
 
+	}
+	else{
+		$state.go('login');
+	}
+	itself.logout=function(){
+		console.log('itsok');
+			user.remove();
+			$state.go('login');
+		}
+	itself.showConfirm = function(ev) {
+		console.log('its ');
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Would you like to Logout?')
+          .textContent('You will be signing out')
+          .ariaLabel('logout')
+          .targetEvent(ev)
+          .ok('ok')
+          .cancel('cancel');
+
+    $mdDialog.show(confirm).then(function() {
+      itself.logout()
+    });
+  };
+});
