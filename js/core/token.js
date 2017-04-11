@@ -54,7 +54,10 @@ auth.factory('token',function($http,$timeout){
 			localStorage.setItem('expiration',date);
 			localStorage.setItem('refreshToken',refreshToken);
 		},
-		count:0
+		refresh:function(){
+			var date=Date.now()+expiration;
+			localStorage.setItem('expiration',date);
+		}
 
 	}
 	return token;
@@ -73,10 +76,7 @@ auth.factory('user',[
 							$http({
 								url:'http://www.hamrokitchen.com/api/user',
 								params:{},
-								method:'GET',
-								header:{
-									Authorization:'Bearer '+t
-								}
+								method:'GET'
 							}).then(function(response)
 							{
 								callback(response);
@@ -91,6 +91,23 @@ auth.factory('user',[
 				},
 				remove:function(){
 					token.destroy();
+				},
+				register:function(user,callback){
+					console.log(URL);
+					var data={
+						user:user.name,
+						email:user.email,
+						password:user.password
+					}
+					$http({
+						method:'POST',
+						url:URL+'register',
+						data:data
+					}).then(function(response){
+						callback(response);
+					},function(response){
+						callback(response);
+					});
 				}
 			}
 			return user;

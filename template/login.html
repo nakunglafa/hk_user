@@ -1,10 +1,10 @@
 <div class="login-page">
   <div class="form">
     <form class="register-form">
-      <input type="text" placeholder="name" ng-model="login.username"/>
-      <input type="password" placeholder="password"  ng-model="login.password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
+      <input type="text" placeholder="name" ng-model="login.user"/>
+      <input type="password" placeholder="password"  ng-model="login.pass"/>
+      <input type="text" placeholder="email address" ng-model="login.email"/>
+      <button ng-click="login.create()">create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">

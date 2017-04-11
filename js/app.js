@@ -7,3 +7,4 @@ var app=angular.module('hamroKitchen',[
 'auth'
 
 ]);
+const URL='http://www.hamroKitchen.com/';

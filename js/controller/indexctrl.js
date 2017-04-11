@@ -1,24 +1,30 @@
 
-app.controller('indexctrl',function($state,user,$mdDialog){
+app.controller('indexctrl',function($state,user,$mdDialog,$timeout){
 	var itself=this;
 	if(user.isLogin())
 	{
-		user.get(function(response){
-			console.log(response);
-			itself.user=response.data;
+		$timeout(function(){
+			user.get(function(response){
+			if(response.data.error)
+			{
+				$state.go('login');
+			}
+			else
+			{
+				itself.user=response.data;		
+			}
 		});
+		},1000);
 
 	}
 	else{
 		$state.go('login');
-	}
+		}
 	itself.logout=function(){
-		console.log('itsok');
 			user.remove();
 			$state.go('login');
 		}
 	itself.showConfirm = function(ev) {
-		console.log('its ');
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
           .title('Would you like to Logout?')

@@ -14,22 +14,25 @@ app.controller('loginctrl',
 						var t=response.data;
 						token.set(t.access_token,t.expires_in,t.refresh_token);
 						$state.go('index');
-						
 					});
 				}
-
 		}
-
+		var register={
+			name:itself.user,
+			password:itself.pass,
+			email:itself.email
+		}
+		itself.create=function(){
+			user.register(register,function(response){
+				console.log(response);
+			});
+		}
 // template jquery------------------------------------------------------------------
 			$('.message a').click(function(){
 			$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 			});		
 		}
 	);
-
-
-
-
 app.controller('registerctrl',function(){
 
 })

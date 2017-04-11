@@ -1,7 +1,7 @@
 app.config(function($stateProvider,$urlRouterProvider,$locationProvider){
 	$stateProvider
 	.state('index',{
-		url:'/index',
+		url:'/',
 		templateUrl:'template/index.html'
 	})
 	.state('login',{
@@ -14,16 +14,15 @@ app.config(function($stateProvider,$urlRouterProvider,$locationProvider){
 		templateUrl:'template/todo.html',
 		controller:'todoctrl as todo'
 	});
-	$urlRouterProvider.otherwise('/login');
 });
-
-app.run(['$http','token','user','$state', function ($http,token,user,$state) {
-
-   if(user.isLogin()){
-     $http.defaults.headers.common['Authorization'] = 'Bearer '+token.get();
-    $http.defaults.headers.common['Accept'] = 'application/json';  	
-   }
-   else{
-   	$state.go('login');
-   }
+var a=1;
+app.run(['$http','token','user','$state','$rootScope', function ($http,token,user,$state,$rootScope) {
+$rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+		   if(user.isLogin()){
+		    $http.defaults.headers.common['Authorization'] = 'Bearer '+token.get();
+		    $http.defaults.headers.common['Accept'] = 'application/json';  	
+		   }
+        });
 }]);
+
